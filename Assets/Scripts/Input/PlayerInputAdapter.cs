@@ -1,10 +1,9 @@
-using EdwinGameDev.Characters;
-using EdwinGameDev.Utils.Joystick;
+using EdwinGameDev.Character;
 using UnityEngine;
 
-namespace EdwinGameDev.InputSystem
+namespace EdwinGameDev.Input
 {
-    public class PlayerInput : MonoBehaviour
+    public class PlayerInputAdapter : MonoBehaviour
     {
         private Joystick _joystick;
         private CharacterControllerFacade _character;
@@ -14,6 +13,11 @@ namespace EdwinGameDev.InputSystem
             _joystick = FindObjectOfType<Joystick>();
         }
 
+        public void Initialize(CharacterControllerFacade character)
+        {
+            _character = character;
+        }
+        
         private void Update()
         {
             Vector3 input;
@@ -26,18 +30,13 @@ namespace EdwinGameDev.InputSystem
             else
             {
                 input = new Vector3(
-                    Input.GetAxisRaw("Horizontal"),
+                    UnityEngine.Input.GetAxisRaw("Horizontal"),
                     0,
-                    Input.GetAxisRaw("Vertical")
+                    UnityEngine.Input.GetAxisRaw("Vertical")
                 );
             }
 
-            _character?.SetDirection(input);
-        }
-
-        public void Initialize(CharacterControllerFacade character)
-        {
-            _character = character;
+            _character?.Move(input);
         }
     }
 }
