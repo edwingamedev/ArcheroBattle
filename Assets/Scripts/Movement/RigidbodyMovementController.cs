@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EdwinGameDev.MovementSystem
+namespace EdwinGameDev.Movement
 {
     [RequireComponent(typeof(Rigidbody))]
     public class RigidbodyMovementController : MonoBehaviour, IMoveable
@@ -21,7 +21,7 @@ namespace EdwinGameDev.MovementSystem
             Move();
             Rotate();
         }
-        
+
         public void SetDirection(Vector3 direction)
         {
             _direction = direction.normalized;

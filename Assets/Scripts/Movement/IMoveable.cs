@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EdwinGameDev.MovementSystem
+namespace EdwinGameDev.Movement
 {
     public interface IMoveable
     {
