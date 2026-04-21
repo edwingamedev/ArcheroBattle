@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace EdwinGameDev.Utils.Joystick
+namespace EdwinGameDev.Input
 {
     public class FloatingJoystick : Joystick
     {
