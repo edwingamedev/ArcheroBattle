@@ -21,8 +21,7 @@ namespace EdwinGameDev.Input
         private void Update()
         {
             Vector3 input;
-
-            // Use joystick if available and being used, otherwise fall back to keyboard
+            
             if (_joystick && _joystick.Direction.sqrMagnitude > 0.01f)
             {
                 input = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);

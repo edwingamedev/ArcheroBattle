@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EdwinGameDev.Spawn
 {
-    public class ProjectileSpawner : MonoBehaviour
+    public class ProjectileSpawner : MonoBehaviour, IProjectileSpawner
     {
         [SerializeField] private GameObject projectilePrefab;
 

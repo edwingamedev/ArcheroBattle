@@ -15,9 +15,8 @@ namespace EdwinGameDev.Combat.Attacks
             _origin = origin;
         }
 
-        public void Execute()
+        public void Execute(Vector3 direction)
         {
-            Vector3 direction = _origin.forward;
             _spawner.SpawnProjectile(_origin.position, direction);
         }
     }
