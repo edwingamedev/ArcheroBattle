@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1682021594823889377}
   - component: {fileID: 4379991425210766227}
   - component: {fileID: 1180245580213982318}
+  - component: {fileID: 4963331926043047982}
+  - component: {fileID: 1079678636093537402}
   m_Layer: 0
   m_Name: Bee
   m_TagString: Untagged
@@ -113,6 +115,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6926839794853975167}
+--- !u!114 &4963331926043047982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358921057130329688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3132176783f4d95a52139c3d0913c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1079678636093537402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358921057130329688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef345b68330d469babc9910c5145121a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsPlayer>k__BackingField: 0
+  healthAdapter: {fileID: 4963331926043047982}
 --- !u!1 &6926839794863368101
 GameObject:
   m_ObjectHideFlags: 0
