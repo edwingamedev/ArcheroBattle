@@ -36,8 +36,13 @@ namespace EdwinGameDev.Combat.Health
 
             if (Current == 0)
             {
-                OnDied?.Invoke();
+                Die();
             }
+        }
+
+        private void Die()
+        {
+            OnDied?.Invoke();
         }
     }
 }

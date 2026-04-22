@@ -5,17 +5,59 @@ namespace EdwinGameDev.UI.FillBar
 {
     public class HealthBarAdapter : MonoBehaviour
     {
-        [SerializeField] private AnimatedFillBar fillBar;
-        private HealthPresenter _presenter;
+        [SerializeField] private FillBar fillBar;
+        [SerializeField] private Vector3 offset;
 
-        public void Setup(IHealth health)
+        private Camera _cam;
+        private Transform _target;
+        private IHealth _health;
+
+        private void Awake()
         {
-            _presenter = new HealthPresenter(health, fillBar);
+            _cam = Camera.main;
+        }
+
+        private void LateUpdate()
+        {
+            if (!_target)
+            {
+                return;
+            }
+
+            Vector3 screenPos = _cam.WorldToScreenPoint(_target.position + offset);
+            transform.position = screenPos;
+        }
+
+        public void Initialize(IHealth health, Transform target)
+        {
+            _target = target;
+
+            _health = health;
+            _health.OnHealthChanged += OnHealthChanged;
+            _health.OnDied += OnDied;
+
+            OnHealthChanged(_health.Current, _health.Max, 0);
+        }
+
+        private void OnHealthChanged(int current, int max, int delta)
+        {
+            fillBar.UpdateUIEventHandler(current, max, delta);
+        }
+        
+        private void OnDied()
+        {
+            Destroy(gameObject);
         }
 
         private void OnDestroy()
         {
-            _presenter?.Dispose();
+            if (_health == null)
+            {
+                return;
+            }
+
+            _health.OnHealthChanged -= OnHealthChanged;
+            _health.OnDied -= OnDied;
         }
     }
 }

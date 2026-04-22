@@ -1,5 +1,6 @@
 using EdwinGameDev.Match;
 using EdwinGameDev.Spawn.Factories;
+using EdwinGameDev.Target;
 using UnityEngine;
 
 namespace EdwinGameDev.Spawn
@@ -8,9 +9,9 @@ namespace EdwinGameDev.Spawn
     {
         [SerializeField] private GameObject heroPrefab;
         [SerializeField] private MatchManager matchManager;
-
+        
         private HeroSpawnService _spawnService;
-
+        
         private void Awake()
         {
             _spawnService = new HeroSpawnService(new HeroFactory());
@@ -26,7 +27,6 @@ namespace EdwinGameDev.Spawn
         private void InitialSpawn()
         {
             _spawnService.Spawn(heroPrefab, Vector3.zero);
-            
         }
     }
 }

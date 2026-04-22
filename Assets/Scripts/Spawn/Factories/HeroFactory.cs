@@ -3,6 +3,7 @@ using EdwinGameDev.Character;
 using EdwinGameDev.Combat.Attacks;
 using EdwinGameDev.Combat.Health;
 using EdwinGameDev.Movement;
+using EdwinGameDev.Target;
 using UnityEngine;
 
 namespace EdwinGameDev.Spawn.Factories
@@ -11,28 +12,36 @@ namespace EdwinGameDev.Spawn.Factories
     {
         public CharacterControllerFacade Create(GameObject unitGo)
         {
-            var movementAnimation = unitGo.GetComponentInChildren<IMovementAnimation>();
-            var attackAnimation = unitGo.GetComponentInChildren<IAttackAnimation>();
-            var healthAnimation = unitGo.GetComponentInChildren<IHealthAnimation>();
-            
+            IMovementAnimation movementAnimation = unitGo.GetComponentInChildren<IMovementAnimation>();
+            IAttackAnimation attackAnimation = unitGo.GetComponentInChildren<IAttackAnimation>();
+            IHealthAnimation healthAnimation = unitGo.GetComponentInChildren<IHealthAnimation>();
+
             IMoveable moveable = unitGo.GetComponent<IMoveable>();
             IProjectileSpawner spawner = unitGo.GetComponent<IProjectileSpawner>();
-            
-            var health = new Health(100);
+
+            IHealth health = new Health(100);
             IAttack attack = new ProjectileAttack(spawner, unitGo.transform);
-            
-            MovementModule movementModule = new MovementModule(moveable, movementAnimation);
+            ITarget target = unitGo.GetComponent<ITarget>();
+
+            TargetingSystem targetingSystem = new TargetingSystem(target);
+
+            MovementModule movementModule = new MovementModule(
+                moveable,
+                movementAnimation
+            );
 
             AttackModule attackModule = new AttackModule(
                 attack,
-                attackAnimation
+                attackAnimation,
+                targetingSystem,
+                unitGo.transform
             );
 
             HealthModule healthModule = new HealthModule(
                 health,
                 healthAnimation
             );
-            
+
             return new CharacterControllerFacade(
                 movementModule,
                 attackModule,

@@ -1,6 +1,8 @@
 using EdwinGameDev.Character;
+using EdwinGameDev.Combat.Health;
 using EdwinGameDev.Input;
 using EdwinGameDev.Spawn.Factories;
+using EdwinGameDev.Target;
 using UnityEngine;
 
 namespace EdwinGameDev.Spawn
@@ -16,12 +18,15 @@ namespace EdwinGameDev.Spawn
 
         public CharacterControllerFacade Spawn(GameObject prefab, Vector3 position)
         {
-            GameObject heroGo = GameObject.Instantiate(prefab, position, Quaternion.identity);
+            GameObject heroGo = Object.Instantiate(prefab, position, Quaternion.identity);
             CharacterControllerFacade character = _factory.Create(heroGo);
 
             heroGo.GetComponent<PlayerInputAdapter>()
                 .Initialize(character);
-
+            
+            heroGo.GetComponent<CharacterAdapter>()
+                .Initialize(character);
+            
             return character;
         }
     }

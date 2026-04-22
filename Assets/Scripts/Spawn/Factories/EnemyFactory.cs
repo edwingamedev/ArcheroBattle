@@ -7,14 +7,14 @@ namespace EdwinGameDev.Spawn.Factories
     {
         public GameObject Create(GameObject prefab, Vector3 position)
         {
-            GameObject enemyGO = GameObject.Instantiate(prefab, position, Quaternion.identity);
+            GameObject enemyGo = Object.Instantiate(prefab, position, Quaternion.identity);
             
             Health health = new Health(50);
             
-            HealthAdapter healthAdapter = enemyGO.GetComponent<HealthAdapter>();
+            HealthAdapter healthAdapter = enemyGo.GetComponent<HealthAdapter>();
             healthAdapter.Initialize(health);
-
-            return enemyGO;
+            
+            return enemyGo;
         }
     }
 }
