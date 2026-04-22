@@ -1,0 +1,56 @@
+using UnityEngine;
+
+namespace EdwinGameDev.Character
+{
+    public class CharacterControllerFacade
+    {
+        private readonly MovementModule _movementModule;
+        private readonly AttackModule _attackModule;
+        private readonly HealthModule _healthModule;
+
+        public CharacterControllerFacade(
+            MovementModule movementModule = null,
+            AttackModule attackModule = null,
+            HealthModule healthModule = null)
+        {
+            _movementModule = movementModule;
+            _attackModule = attackModule;
+            _healthModule = healthModule;
+        }
+
+        public void Tick(float deltaTime)
+        {
+            _attackModule?.Tick(deltaTime);
+        }
+
+        public void Move(Vector3 dir)
+        {
+            if (IsDead())
+            {
+                return;
+            }
+
+            _movementModule?.Move(dir);
+        }
+
+        public void TryAttack()
+        {
+            if (IsDead())
+            {
+                return;
+            }
+
+            _attackModule?.TryAttack();
+        }
+
+        public void TakeDamage(int dmg)
+        {
+            _healthModule?.TakeDamage(dmg);
+        }
+
+        private bool IsDead()
+        {
+            return _healthModule is { IsAlive: false };
+        }
+    }
+}
