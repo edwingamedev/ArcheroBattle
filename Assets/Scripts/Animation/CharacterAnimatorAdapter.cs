@@ -7,18 +7,31 @@ namespace EdwinGameDev.Animation
     {
         [SerializeField] private Animator animator;
         private Action _onAttackHit;
+        
+        private static readonly int IsDead = Animator.StringToHash("IsDead");
+        private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
-        private static readonly int Run = Animator.StringToHash("Run");
-        private static readonly int Idle = Animator.StringToHash("Idle");
-        private static readonly int Attack = Animator.StringToHash("Attack");
-        private static readonly int Die = Animator.StringToHash("Die");
-        private static readonly int TakeDamage = Animator.StringToHash("TakeDamage");
-
-        public void PlayAttack()
+        public void SetMoving(bool isMoving)
         {
-            animator.SetTrigger(Attack);
+            if (isMoving)
+            {
+                animator.SetBool(IsAttacking, false);
+            }
+            
+            animator.SetBool(IsMoving, isMoving);
         }
-
+        
+        public void SetAttacking(bool isAttacking)
+        {
+            animator.SetBool(IsAttacking, isAttacking);
+        }
+        
+        public void SetDeath(bool isDead)
+        {
+            animator.SetBool(IsDead, isDead);
+        }
+        
         public void SetOnAttackHit(Action callback)
         {
             _onAttackHit = callback;
@@ -27,37 +40,6 @@ namespace EdwinGameDev.Animation
         public void OnAttackHit()
         {
             _onAttackHit?.Invoke();
-        }
-
-        public void PlayDeath()
-        {
-            animator.SetTrigger(Die);
-        }
-
-        public void PlayHit()
-        {
-            animator.SetTrigger(TakeDamage);
-        }
-
-        public void SetMoving(bool isMoving)
-        {
-            if (isMoving)
-            {
-                PlayMove();
-                return;
-            }
-            
-            PlayIdle();
-        }
-        
-        private void PlayIdle()
-        {
-            animator.Play(Idle);
-        }
-
-        private void PlayMove()
-        {
-            animator.Play(Run);
         }
     }
 }

@@ -2,7 +2,6 @@ namespace EdwinGameDev.Animation
 {
     public interface IHealthAnimation
     {
-        void PlayDeath();
-        void PlayHit();
+        void SetDeath(bool isDead);
     }
 }

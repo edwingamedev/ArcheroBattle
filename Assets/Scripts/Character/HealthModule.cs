@@ -21,7 +21,7 @@ namespace EdwinGameDev.Character
 
             if (!IsAlive)
             {
-                _animation.PlayDeath();
+                _animation.SetDeath(true);
             }
         }
     }

@@ -53,17 +53,18 @@ namespace EdwinGameDev.Character
 
             _timer = _cooldownTime;
             
-            _currentTarget = _targeting?.GetClosest(_origin.position, 100f);
+            _currentTarget = _targeting?.GetClosest(_origin.position, 10f);
 
             if (_currentTarget == null)
             {
+                _animation?.SetAttacking(false);
                 Debug.Log("No closest target");
                 return;
             }
 
             FaceTarget();
 
-            _animation?.PlayAttack();
+            _animation?.SetAttacking(true);
         }
 
         private void FaceTarget()

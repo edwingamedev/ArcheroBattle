@@ -4,7 +4,7 @@ namespace EdwinGameDev.Animation
 {
     public interface IAttackAnimation
     {
-        void PlayAttack();
+        void SetAttacking(bool isAttacking);
         void SetOnAttackHit(Action callback);
         void OnAttackHit();
     }
