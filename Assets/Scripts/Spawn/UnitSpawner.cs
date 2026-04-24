@@ -1,3 +1,4 @@
+using System;
 using EdwinGameDev.Character;
 using EdwinGameDev.Match;
 using EdwinGameDev.Spawn.Factories;
@@ -15,6 +16,8 @@ namespace EdwinGameDev.Spawn
         [SerializeField] private Transform uiCanvas;
 
         private HeroSpawnService _spawnService;
+
+        public event Action<CharacterAdapter> OnHeroSpawn;
 
         private void Awake()
         {
@@ -38,8 +41,10 @@ namespace EdwinGameDev.Spawn
             healthBar.Initialize(
                 targetAdapter.HealthModule.Health,
                 character.transform,
-                new Vector3(0,3.5f,0)
+                new Vector3(0, 3.5f, 0)
             );
+
+            OnHeroSpawn?.Invoke(character);
         }
     }
 }
