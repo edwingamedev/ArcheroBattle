@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsPlayer>k__BackingField: 0
+  collider: {fileID: 4379991425210766227}
 --- !u!114 &-592491089945160543
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ namespace EdwinGameDev.Spawn.Factories
     {
         public CharacterAdapter Create(GameObject prefab, Vector3 position)
         {
-            GameObject enemyGo = Object.Instantiate(prefab, position, Quaternion.identity);
+            GameObject enemyGo = Object.Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
 
             CharacterAdapter character = enemyGo.GetComponent<CharacterAdapter>();
             TargetAdapter targetAdapter = enemyGo.GetComponent<TargetAdapter>();

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1899910108924619651}
-  - component: {fileID: 8443627823515538212}
   - component: {fileID: 1740601882173313156}
   - component: {fileID: 698502007921018689}
+  - component: {fileID: 8443627823515538212}
   m_Layer: 9
   m_Name: LongSword
   m_TagString: Untagged
@@ -35,20 +35,6 @@ Transform:
   - {fileID: 2342792731066884941}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8443627823515538212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3092428337418273801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac1ac9458b84b59827904fa8cc84f9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 20
-  damage: 10
 --- !u!54 &1740601882173313156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -99,6 +85,20 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: -0.2, z: 0}
+--- !u!114 &8443627823515538212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3092428337418273801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac1ac9458b84b59827904fa8cc84f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  damage: 25
 --- !u!1 &4604682185816472645
 GameObject:
   m_ObjectHideFlags: 0

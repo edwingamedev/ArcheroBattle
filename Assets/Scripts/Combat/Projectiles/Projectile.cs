@@ -26,18 +26,14 @@ namespace EdwinGameDev.Combat.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.TryGetComponent(out ITarget target))
+            if (other.TryGetComponent(out ITarget target))
             {
-                return;
+                if (target != _owner)
+                {
+                    target.TakeDamage(damage);
+                }
             }
 
-            if (target == _owner)
-            {
-                return;
-            }
-
-
-            target.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

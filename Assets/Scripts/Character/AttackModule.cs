@@ -53,7 +53,7 @@ namespace EdwinGameDev.Character
 
             _timer = _cooldownTime;
             
-            _currentTarget = _targeting?.GetClosest(_origin.position, 10f);
+            _currentTarget = _targeting?.GetClosest(_origin.position, 50f);
 
             if (_currentTarget == null)
             {
