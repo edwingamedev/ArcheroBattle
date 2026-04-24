@@ -7,5 +7,7 @@ namespace EdwinGameDev.Target
         Transform Transform { get; }
         bool IsAlive { get; }
         bool IsPlayer { get; set; }
+
+        void TakeDamage(int amount);
     }
 }

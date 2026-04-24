@@ -1,4 +1,4 @@
-using EdwinGameDev.Combat.Health;
+using EdwinGameDev.Character;
 using UnityEngine;
 
 namespace EdwinGameDev.Target
@@ -6,9 +6,18 @@ namespace EdwinGameDev.Target
     public class TargetAdapter : MonoBehaviour, ITarget
     {
         [field: SerializeField] public bool IsPlayer { get; set; }
-        [SerializeField] private HealthAdapter healthAdapter;
+
         public Transform Transform => transform;
-        public bool IsAlive => HasHealth() && healthAdapter.Health.IsAlive;
+        public bool IsAlive => HasHealth() && HealthModule.IsAlive;
+
+        public HealthModule HealthModule { get; private set; }
+
+        [SerializeField] private Collider _collider;
+
+        public void Initialize(HealthModule health)
+        {
+            HealthModule = health;
+        }
 
         private void OnEnable()
         {
@@ -19,7 +28,7 @@ namespace EdwinGameDev.Target
                 return;
             }
 
-            healthAdapter.Health.OnDied += OnDied;
+            HealthModule.OnDied += OnDied;
         }
 
         private void OnDisable()
@@ -31,14 +40,24 @@ namespace EdwinGameDev.Target
         {
             Cleanup();
         }
-        
-        private bool HasHealth()
+
+        public void TakeDamage(int amount)
         {
-            return healthAdapter && healthAdapter.Health != null;
+            if (!HasHealth())
+            {
+                return;
+            }
+
+            HealthModule.TakeDamage(amount);
         }
 
         private void OnDied()
         {
+            if (_collider)
+            {
+                _collider.enabled = false;
+            }
+
             TargetProvider.RemoveTarget(this);
         }
 
@@ -51,7 +70,12 @@ namespace EdwinGameDev.Target
                 return;
             }
 
-            healthAdapter.Health.OnDied -= OnDied;
+            HealthModule.OnDied -= OnDied;
+        }
+        
+        private bool HasHealth()
+        {
+            return HealthModule != null;
         }
     }
 }

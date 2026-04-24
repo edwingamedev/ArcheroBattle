@@ -1,3 +1,4 @@
+using System;
 using EdwinGameDev.Animation;
 using EdwinGameDev.Combat.Health;
 
@@ -5,24 +6,29 @@ namespace EdwinGameDev.Character
 {
     public class HealthModule
     {
-        private readonly IHealth _health;
+        public IHealth Health { get; }
         private readonly IHealthAnimation _animation;
-        public bool IsAlive => _health.IsAlive;
+        public bool IsAlive => Health.IsAlive;
+        public event Action OnDied;
 
         public HealthModule(IHealth health, IHealthAnimation animation)
         {
-            _health = health;
+            Health = health;
             _animation = animation;
+
+            Health.OnDied += HealthOnDied;
         }
 
         public void TakeDamage(int amount)
         {
-            _health.TakeDamage(amount);
+            Health.TakeDamage(amount);
+            _animation.TakeDamage();
+        }
 
-            if (!IsAlive)
-            {
-                _animation.SetDeath(true);
-            }
+        private void HealthOnDied()
+        {
+            _animation.SetDeath(true);
+            OnDied?.Invoke();
         }
     }
 }

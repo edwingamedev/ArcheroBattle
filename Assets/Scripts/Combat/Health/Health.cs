@@ -34,7 +34,7 @@ namespace EdwinGameDev.Combat.Health
 
             OnHealthChanged?.Invoke(Current, Max, amount);
 
-            if (Current == 0)
+            if (!IsAlive)
             {
                 Die();
             }

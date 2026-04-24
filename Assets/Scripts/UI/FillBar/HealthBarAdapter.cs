@@ -28,8 +28,14 @@ namespace EdwinGameDev.UI.FillBar
             transform.position = screenPos;
         }
 
-        public void Initialize(IHealth health, Transform target)
+        public void Initialize(IHealth health, Transform target, Vector3 offset = default)
         {
+            if (offset != default)
+            {
+                this.offset = offset;
+            }
+
+
             _target = target;
 
             _health = health;
@@ -43,7 +49,7 @@ namespace EdwinGameDev.UI.FillBar
         {
             fillBar.UpdateUIEventHandler(current, max, delta);
         }
-        
+
         private void OnDied()
         {
             Destroy(gameObject);

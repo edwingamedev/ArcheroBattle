@@ -4,16 +4,43 @@ namespace EdwinGameDev.Character
 {
     public class CharacterAdapter : MonoBehaviour
     {
-        private CharacterControllerFacade _character;
+        private MovementModule _movement;
+        private AttackModule _attack;
+        private HealthModule _health;
 
-        public void Initialize(CharacterControllerFacade character)
+        public void Initialize(
+            MovementModule movement,
+            AttackModule attack,
+            HealthModule health)
         {
-            _character = character;
+            _movement = movement;
+            _attack = attack;
+            _health = health;
         }
 
         private void Update()
         {
-            _character?.Tick(Time.deltaTime);
+            _attack?.Tick(Time.deltaTime);
+        }
+
+        public void Move(Vector3 dir)
+        {
+            if (!IsAlive())
+            {
+                return;
+            }
+
+            _movement?.Move(dir);
+
+            if (dir.sqrMagnitude < 0.01f)
+            {
+                _attack?.TryAttack();
+            }
+        }
+
+        private bool IsAlive()
+        {
+            return _health == null || _health.IsAlive;
         }
     }
 }

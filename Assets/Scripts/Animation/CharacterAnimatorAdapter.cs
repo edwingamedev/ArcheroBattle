@@ -11,12 +11,13 @@ namespace EdwinGameDev.Animation
         private static readonly int IsDead = Animator.StringToHash("IsDead");
         private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
+        private static readonly int Hit = Animator.StringToHash("Hit");
 
         public void SetMoving(bool isMoving)
         {
             if (isMoving)
             {
-                animator.SetBool(IsAttacking, false);
+                SetAttacking(false);
             }
             
             animator.SetBool(IsMoving, isMoving);
@@ -25,6 +26,12 @@ namespace EdwinGameDev.Animation
         public void SetAttacking(bool isAttacking)
         {
             animator.SetBool(IsAttacking, isAttacking);
+        }
+
+        public void TakeDamage()
+        {
+            Debug.Log("TakeDamage animation");
+            animator.SetTrigger(Hit);
         }
         
         public void SetDeath(bool isDead)

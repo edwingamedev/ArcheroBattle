@@ -689,6 +689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroPrefab: {fileID: 3206923099687242354, guid: 89de4008f8cc87d4a8e2924ba9d12eb7, type: 3}
   matchManager: {fileID: 488506872}
+  healthBarPrefab: {fileID: 7196691061739818785, guid: f8928d980c8afdc49b808aedf5f98292, type: 3}
+  uiCanvas: {fileID: 629249248}
 --- !u!114 &1253203033
 MonoBehaviour:
   m_ObjectHideFlags: 0

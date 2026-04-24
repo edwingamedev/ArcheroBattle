@@ -6,14 +6,14 @@ namespace EdwinGameDev.Input
     public class PlayerInputAdapter : MonoBehaviour
     {
         private Joystick _joystick;
-        private CharacterControllerFacade _character;
+        private CharacterAdapter _character;
 
         private void Awake()
         {
             _joystick = FindObjectOfType<Joystick>();
         }
 
-        public void Initialize(CharacterControllerFacade character)
+        public void Initialize(CharacterAdapter character)
         {
             _character = character;
         }

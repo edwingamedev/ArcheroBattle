@@ -1,4 +1,4 @@
-using EdwinGameDev.Combat.Health;
+using EdwinGameDev.Target;
 using UnityEngine;
 
 namespace EdwinGameDev.Combat.Projectiles
@@ -10,8 +10,11 @@ namespace EdwinGameDev.Combat.Projectiles
 
         private Vector3 _direction;
 
-        public void Initialize(Vector3 direction)
+        private ITarget _owner;
+
+        public void Initialize(Vector3 direction, ITarget target)
         {
+            _owner = target;
             _direction = direction.normalized;
             Destroy(gameObject, 5f);
         }
@@ -23,10 +26,16 @@ namespace EdwinGameDev.Combat.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.TryGetComponent(out IHealth target))
+            if (!other.TryGetComponent(out ITarget target))
             {
                 return;
             }
+
+            if (target == _owner)
+            {
+                return;
+            }
+
 
             target.TakeDamage(damage);
             Destroy(gameObject);

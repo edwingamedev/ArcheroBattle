@@ -1,4 +1,5 @@
 using EdwinGameDev.Spawn;
+using EdwinGameDev.Target;
 using UnityEngine;
 
 namespace EdwinGameDev.Combat.Attacks
@@ -6,18 +7,18 @@ namespace EdwinGameDev.Combat.Attacks
     public class ProjectileAttack : IAttack
     {
         private readonly IProjectileSpawner _spawner;
-        private readonly Transform _origin;
+        private readonly ITarget _owner;
         public float AttackSpeed => 1;
 
-        public ProjectileAttack(IProjectileSpawner spawner, Transform origin)
+        public ProjectileAttack(IProjectileSpawner spawner, ITarget owner)
         {
             _spawner = spawner;
-            _origin = origin;
+            _owner = owner;
         }
 
         public void Execute(Vector3 direction)
         {
-            _spawner.SpawnProjectile(_origin.position, direction);
+            _spawner.SpawnProjectile(direction, _owner);
         }
     }
 }
