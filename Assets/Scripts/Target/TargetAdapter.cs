@@ -1,3 +1,4 @@
+using System;
 using EdwinGameDev.Character;
 using UnityEngine;
 
@@ -12,33 +13,30 @@ namespace EdwinGameDev.Target
 
         public HealthModule HealthModule { get; private set; }
 
-        [SerializeField] private Collider _collider;
+        [SerializeField] private new Collider collider;
 
+        public event Action OnDied;
+        
         public void Initialize(HealthModule health)
         {
             HealthModule = health;
+            HealthModule.OnDied += OnDiedEventHandler;
         }
 
         private void OnEnable()
         {
             TargetProvider.AddTarget(this);
-
-            if (!HasHealth())
-            {
-                return;
-            }
-
-            HealthModule.OnDied += OnDied;
         }
 
         private void OnDisable()
         {
-            Cleanup();
+            RemoveTarget();
         }
 
         private void OnDestroy()
         {
-            Cleanup();
+            RemoveTarget();
+            HealthModule.OnDied -= OnDiedEventHandler;
         }
 
         public void TakeDamage(int amount)
@@ -51,28 +49,23 @@ namespace EdwinGameDev.Target
             HealthModule.TakeDamage(amount);
         }
 
-        private void OnDied()
+        private void OnDiedEventHandler()
         {
-            if (_collider)
+            if (collider)
             {
-                _collider.enabled = false;
+                collider.enabled = false;
             }
 
             TargetProvider.RemoveTarget(this);
+            
+            OnDied?.Invoke();
         }
 
-        private void Cleanup()
+        private void RemoveTarget()
         {
             TargetProvider.RemoveTarget(this);
-
-            if (!HasHealth())
-            {
-                return;
-            }
-
-            HealthModule.OnDied -= OnDied;
         }
-        
+
         private bool HasHealth()
         {
             return HealthModule != null;
