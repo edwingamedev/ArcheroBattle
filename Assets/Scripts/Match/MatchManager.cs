@@ -44,6 +44,11 @@ namespace EdwinGameDev.Match
             _currentStageGo.Initialize(enemySpawner, this);
         }
 
+        public void PlayAgain()
+        {
+            StartMatch();
+        }
+        
         public void StartMatch()
         {
             OnMatchStarted?.Invoke();
