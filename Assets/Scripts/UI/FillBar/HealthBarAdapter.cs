@@ -35,7 +35,6 @@ namespace EdwinGameDev.UI.FillBar
                 this.offset = offset;
             }
 
-
             _target = target;
 
             _health = health;

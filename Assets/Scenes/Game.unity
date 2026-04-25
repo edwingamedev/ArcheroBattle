@@ -1213,6 +1213,7 @@ MonoBehaviour:
   - {fileID: 25578247}
   - {fileID: 405013591}
   enemySpawner: {fileID: 1253203033}
+  matchManager: {fileID: 488506872}
   portal: {fileID: 740362256}
 --- !u!1 &1244021808
 GameObject:

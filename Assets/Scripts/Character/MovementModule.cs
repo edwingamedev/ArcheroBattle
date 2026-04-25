@@ -27,5 +27,10 @@ namespace EdwinGameDev.Character
             _animation.SetMoving(false);
             _moveable.Stop();
         }
+
+        public void Stop()
+        {
+            _moveable.Stop();
+        }
     }
 }

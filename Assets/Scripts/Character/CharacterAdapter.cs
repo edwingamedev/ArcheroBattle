@@ -16,6 +16,8 @@ namespace EdwinGameDev.Character
             _movement = movement;
             _attack = attack;
             _health = health;
+
+            _health.OnDied += _movement.Stop;
         }
 
         private void Update()
