@@ -18,17 +18,20 @@ namespace EdwinGameDev.Spawn
         private HeroSpawnService _spawnService;
 
         public event Action<CharacterAdapter> OnHeroSpawn;
+        private CharacterAdapter _playerCharacter;
 
         private void Awake()
         {
             _spawnService = new HeroSpawnService(new HeroFactory());
 
             matchManager.OnMatchStarted += InitialSpawn;
+            matchManager.OnStageCompleted += RepositionCharacter;
         }
 
         private void OnDestroy()
         {
             matchManager.OnMatchStarted -= InitialSpawn;
+            matchManager.OnStageCompleted -= RepositionCharacter;
         }
 
         private void InitialSpawn()
@@ -44,7 +47,15 @@ namespace EdwinGameDev.Spawn
                 new Vector3(0, 3.5f, 0)
             );
 
+            _playerCharacter = character;
+
             OnHeroSpawn?.Invoke(character);
+        }
+
+        private void RepositionCharacter()
+        {
+            _playerCharacter.transform.position = Vector3.zero;
+            _playerCharacter.Stop();
         }
     }
 }

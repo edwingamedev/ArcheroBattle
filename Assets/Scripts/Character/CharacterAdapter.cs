@@ -40,6 +40,11 @@ namespace EdwinGameDev.Character
             }
         }
 
+        public void Stop()
+        {
+            _movement?.Stop();
+        }
+        
         private bool IsAlive()
         {
             return _health == null || _health.IsAlive;

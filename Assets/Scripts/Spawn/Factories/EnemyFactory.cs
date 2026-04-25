@@ -10,9 +10,9 @@ namespace EdwinGameDev.Spawn.Factories
 {
     public class EnemyFactory
     {
-        public AIController Create(GameObject prefab, Vector3 position)
+        public AIController Create(GameObject prefab, Vector3 position, Transform parent)
         {
-            GameObject unitGo = Object.Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
+            GameObject unitGo = Object.Instantiate(prefab, position, Quaternion.Euler(0, 180, 0), parent);
 
             AIController aiController = unitGo.GetComponent<AIController>();
             TargetAdapter targetAdapter = unitGo.GetComponent<TargetAdapter>();

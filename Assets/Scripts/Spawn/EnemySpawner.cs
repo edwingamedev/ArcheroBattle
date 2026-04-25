@@ -15,9 +15,9 @@ namespace EdwinGameDev.Spawn
         
         private readonly EnemyFactory _factory = new EnemyFactory();
 
-        public AIController Spawn(Vector3 position)
+        public AIController Spawn(Vector3 position, Transform parent)
         {
-            AIController character = _factory.Create(enemyPrefab, position);
+            AIController character = _factory.Create(enemyPrefab, position, parent);
             TargetAdapter targetAdapter = character.GetComponent<TargetAdapter>();
             HealthBarAdapter healthBar = Instantiate(healthBarPrefab, uiCanvas);
 

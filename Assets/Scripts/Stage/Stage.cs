@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using EdwinGameDev.Character;
+using EdwinGameDev.AI;
+using EdwinGameDev.Match;
 using EdwinGameDev.Spawn;
 using EdwinGameDev.Target;
 using UnityEngine;
@@ -9,23 +10,31 @@ namespace EdwinGameDev.Stage
     public class Stage : MonoBehaviour
     {
         [SerializeField] private List<Transform> spawnPoints;
-        [SerializeField] private EnemySpawner enemySpawner;
-        [SerializeField] private GameObject portal;
+        [SerializeField] private TriggerObject portal;
+        
+        private MatchManager _matchManager;
 
         private int _aliveEnemies;
 
-        private void Start()
+        private void Awake()
         {
-            Initialize();
+            portal.OnTrigger += CompleteStage;
         }
 
-        public void Initialize()
+        private void OnDestroy()
         {
-            portal.SetActive(false);
+            portal.OnTrigger -= CompleteStage;
+        }
+
+        public void Initialize(EnemySpawner enemySpawner, MatchManager matchManager)
+        {
+            _matchManager = matchManager;
+
+            portal.Disable();
 
             foreach (Transform spawnPoint in spawnPoints)
             {
-                CharacterAdapter enemy = enemySpawner.Spawn(spawnPoint.position);
+                AIController enemy = enemySpawner.Spawn(spawnPoint.position, transform);
 
                 _aliveEnemies++;
 
@@ -46,7 +55,12 @@ namespace EdwinGameDev.Stage
 
         private void OnStageCleared()
         {
-            portal.SetActive(true);
+            portal.Enable();
+        }
+        
+        private void CompleteStage()
+        {
+            _matchManager?.CompleteStage();
         }
     }
 }
