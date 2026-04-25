@@ -7,7 +7,8 @@ namespace EdwinGameDev.Input
     {
         private Joystick _joystick;
         private CharacterAdapter _character;
-
+        private Vector3 _input;
+        
         private void Awake()
         {
             _joystick = FindObjectOfType<Joystick>();
@@ -20,22 +21,20 @@ namespace EdwinGameDev.Input
         
         private void Update()
         {
-            Vector3 input;
-            
             if (_joystick && _joystick.Direction.sqrMagnitude > 0.01f)
             {
-                input = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
+                _input = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
             }
-            else
+            else // keyboard fallback
             {
-                input = new Vector3(
+                _input = new Vector3(
                     UnityEngine.Input.GetAxisRaw("Horizontal"),
                     0,
                     UnityEngine.Input.GetAxisRaw("Vertical")
                 );
             }
 
-            _character?.Move(input);
+            _character?.Move(_input);
         }
     }
 }

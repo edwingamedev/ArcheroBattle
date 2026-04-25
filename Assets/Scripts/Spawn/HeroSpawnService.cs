@@ -18,9 +18,8 @@ namespace EdwinGameDev.Spawn
         {
             GameObject heroGo = Object.Instantiate(prefab, position, Quaternion.identity);
             CharacterAdapter character = _factory.Create(heroGo);
-            
-            heroGo.GetComponent<PlayerInputAdapter>()
-                .Initialize(character);
+
+            heroGo.GetComponent<PlayerInputAdapter>().Initialize(character);
 
             return character;
         }

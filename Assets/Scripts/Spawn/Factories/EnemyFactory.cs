@@ -1,6 +1,8 @@
+using EdwinGameDev.AI;
 using EdwinGameDev.Animation;
 using EdwinGameDev.Character;
 using EdwinGameDev.Combat.Health;
+using EdwinGameDev.Movement;
 using EdwinGameDev.Target;
 using UnityEngine;
 
@@ -8,19 +10,18 @@ namespace EdwinGameDev.Spawn.Factories
 {
     public class EnemyFactory
     {
-        public CharacterAdapter Create(GameObject prefab, Vector3 position)
+        public AIController Create(GameObject prefab, Vector3 position)
         {
-            GameObject enemyGo = Object.Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
+            GameObject unitGo = Object.Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
 
-            CharacterAdapter character = enemyGo.GetComponent<CharacterAdapter>();
-            TargetAdapter targetAdapter = enemyGo.GetComponent<TargetAdapter>();
+            AIController aiController = unitGo.GetComponent<AIController>();
+            TargetAdapter targetAdapter = unitGo.GetComponent<TargetAdapter>();
 
-            IHealthAnimation healthAnimation = enemyGo.GetComponentInChildren<IHealthAnimation>();
+            IMovementAnimation movementAnimation = unitGo.GetComponentInChildren<IMovementAnimation>();
+            IHealthAnimation healthAnimation = unitGo.GetComponentInChildren<IHealthAnimation>();
+            
+            IMoveable moveable = unitGo.GetComponent<IMoveable>();
 
-            if (character == null)
-            {
-                Debug.LogError("Missing CharacterAdapter on Enemy");
-            }
 
             if (targetAdapter == null)
             {
@@ -33,15 +34,20 @@ namespace EdwinGameDev.Spawn.Factories
                 health,
                 healthAnimation
             );
-
+            
+            MovementModule movementModule = new MovementModule(
+                moveable,
+                movementAnimation
+            );
+            
+            
             targetAdapter.Initialize(healthModule);
-            character.Initialize(
-                movement: null,
-                attack: null,
-                health: healthModule
+            aiController.Initialize(
+                movement: movementModule,
+                targetAdapter
             );
 
-            return character;
+            return aiController;
         }
     }
 }

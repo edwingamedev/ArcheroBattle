@@ -24,12 +24,12 @@ namespace EdwinGameDev.Character
                 return;
             }
 
-            _animation.SetMoving(false);
-            _moveable.Stop();
+            Stop();
         }
 
         public void Stop()
         {
+            _animation.SetMoving(false);
             _moveable.Stop();
         }
     }
