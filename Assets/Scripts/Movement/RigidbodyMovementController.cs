@@ -5,8 +5,8 @@ namespace EdwinGameDev.Movement
     [RequireComponent(typeof(Rigidbody))]
     public class RigidbodyMovementController : MonoBehaviour, IMoveable
     {
-        [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationSpeed = 15f;
+        private float _moveSpeed = 1;
 
         private Rigidbody _rb;
         private Vector3 _direction;
@@ -22,6 +22,11 @@ namespace EdwinGameDev.Movement
             Rotate();
         }
 
+        public void Setup(float movementSpeed)
+        {
+            _moveSpeed = movementSpeed;
+        }
+
         public void SetDirection(Vector3 direction)
         {
             _direction = direction.normalized;
@@ -35,7 +40,7 @@ namespace EdwinGameDev.Movement
 
         private void Move()
         {
-            Vector3 velocity = _direction * moveSpeed;
+            Vector3 velocity = _direction * _moveSpeed;
             velocity.y = _rb.velocity.y;
 
             _rb.velocity = velocity;

@@ -1,5 +1,6 @@
 using EdwinGameDev.Animation;
 using EdwinGameDev.Character;
+using EdwinGameDev.Character.Units;
 using EdwinGameDev.Combat.Attacks;
 using EdwinGameDev.Combat.Health;
 using EdwinGameDev.Movement;
@@ -10,7 +11,7 @@ namespace EdwinGameDev.Spawn.Factories
 {
     public class HeroFactory
     {
-        public CharacterAdapter Create(GameObject unitGo)
+        public CharacterAdapter Create(UnitStats unitStats, GameObject unitGo)
         {
             // --- Get components ---
             IMovementAnimation movementAnimation = unitGo.GetComponentInChildren<IMovementAnimation>();
@@ -38,26 +39,28 @@ namespace EdwinGameDev.Spawn.Factories
                 Debug.LogError("Missing IProjectileSpawner");
             }
 
-            IHealth health = new Health(100);
+            // Health
+            
+            IHealth health = new Health(unitStats.Health);
             
             HealthModule healthModule = new HealthModule(
                 health,
                 healthAnimation
             );
             
+            // Target
+            
             targetAdapter.Initialize(healthModule);
 
             ITarget target = targetAdapter;
             TargetingSystem targetingSystem = new TargetingSystem(target);
 
+            // Attack
+            
             IAttack attack = new ProjectileAttack(
                 spawner,
-                target
-            );
-
-            MovementModule movementModule = new MovementModule(
-                moveable,
-                movementAnimation
+                target,
+                unitStats.AttackSpeed
             );
 
             AttackModule attackModule = new AttackModule(
@@ -66,7 +69,19 @@ namespace EdwinGameDev.Spawn.Factories
                 targetingSystem,
                 unitGo.transform
             );
+            
+            // Movement
+            
+            moveable.Setup(unitStats.MoveSpeed);
+            
+            MovementModule movementModule = new MovementModule(
+                moveable,
+                movementAnimation,
+                unitStats.MoveSpeed
+            );
 
+            // Character setup
+            
             character.Initialize(
                 movementModule,
                 attackModule,

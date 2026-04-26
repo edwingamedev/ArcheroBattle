@@ -12,7 +12,9 @@ namespace EdwinGameDev.Animation
         private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int Hit = Animator.StringToHash("Hit");
-
+        private static readonly int AttackSpeed = Animator.StringToHash("AttackSpeed");
+        private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
+        
         public void SetMoving(bool isMoving)
         {
             if (isMoving)
@@ -47,6 +49,16 @@ namespace EdwinGameDev.Animation
         public void OnAttackHit()
         {
             _onAttackHit?.Invoke();
+        }
+
+        public void SetAttackSpeed(float speed)
+        {
+            animator.SetFloat(AttackSpeed, speed);
+        }
+        
+        public void SetMoveSpeed(float speed)
+        {
+            animator.SetFloat(MovementSpeed, speed);
         }
     }
 }

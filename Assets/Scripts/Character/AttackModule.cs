@@ -28,8 +28,9 @@ namespace EdwinGameDev.Character
             _targeting = targeting;
             _origin = origin;
 
-            _cooldownTime = 1f / attack.AttackSpeed;
+            _cooldownTime = 1f / _attack.AttackSpeed;
             _animation?.SetOnAttackHit(OnAttackHit);
+            _animation?.SetAttackSpeed(attack.AttackSpeed);
         }
 
         public void Tick(float dt)
@@ -74,8 +75,7 @@ namespace EdwinGameDev.Character
                 return;
             }
 
-            Vector3 direction =
-                (_currentTarget.Transform.position - _origin.position).normalized;
+            Vector3 direction = (_currentTarget.Transform.position - _origin.position).normalized;
 
             direction.y = 0;
             
@@ -89,9 +89,9 @@ namespace EdwinGameDev.Character
                 return;
             }
 
-            Vector3 dir = (_currentTarget.Transform.position - _origin.position).normalized;
+            Vector3 direction = (_currentTarget.Transform.position - _origin.position).normalized;
 
-            _attack?.Execute(dir);
+            _attack?.Execute(direction);
         }
     }
 }

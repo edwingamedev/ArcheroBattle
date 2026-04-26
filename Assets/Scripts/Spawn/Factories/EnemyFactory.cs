@@ -19,7 +19,7 @@ namespace EdwinGameDev.Spawn.Factories
 
             IMovementAnimation movementAnimation = unitGo.GetComponentInChildren<IMovementAnimation>();
             IHealthAnimation healthAnimation = unitGo.GetComponentInChildren<IHealthAnimation>();
-            
+
             IMoveable moveable = unitGo.GetComponent<IMoveable>();
 
 
@@ -34,13 +34,17 @@ namespace EdwinGameDev.Spawn.Factories
                 health,
                 healthAnimation
             );
-            
+
+            float movementSpeed = 3.5f;
+            moveable.Setup(movementSpeed);
+
             MovementModule movementModule = new MovementModule(
                 moveable,
-                movementAnimation
+                movementAnimation,
+                movementSpeed
             );
-            
-            
+
+
             targetAdapter.Initialize(healthModule);
             aiController.Initialize(
                 movement: movementModule,

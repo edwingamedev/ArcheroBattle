@@ -1,5 +1,6 @@
 using System;
 using EdwinGameDev.Character;
+using EdwinGameDev.Character.Units;
 using EdwinGameDev.Match;
 using EdwinGameDev.Spawn.Factories;
 using EdwinGameDev.Target;
@@ -10,13 +11,14 @@ namespace EdwinGameDev.Spawn
 {
     public class UnitSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject heroPrefab;
+        [SerializeField] private UnitDefinition unitDefinition;
+        
         [SerializeField] private MatchManager matchManager;
         [SerializeField] private HealthBarAdapter healthBarPrefab;
         [SerializeField] private Transform uiCanvas;
 
         private HeroSpawnService _spawnService;
-
+        private CharacterAdapter _character;
         public event Action<CharacterAdapter> OnHeroSpawn;
         private CharacterAdapter _playerCharacter;
 
@@ -36,20 +38,31 @@ namespace EdwinGameDev.Spawn
 
         private void InitialSpawn()
         {
-            CharacterAdapter character = _spawnService.Spawn(heroPrefab, Vector3.zero);
+            if (_character != null)
+            {
+                Reset();
+                return;
+            }
 
-            TargetAdapter targetAdapter = character.GetComponent<TargetAdapter>();
+            _character = _spawnService.Spawn(unitDefinition, Vector3.zero);
+
+            TargetAdapter targetAdapter = _character.GetComponent<TargetAdapter>();
             HealthBarAdapter healthBar = Instantiate(healthBarPrefab, uiCanvas);
 
             healthBar.Initialize(
                 targetAdapter.HealthModule.Health,
-                character.transform,
+                _character.transform,
                 new Vector3(0, 3.5f, 0)
             );
 
-            _playerCharacter = character;
+            _playerCharacter = _character;
 
-            OnHeroSpawn?.Invoke(character);
+            OnHeroSpawn?.Invoke(_character);
+        }
+
+        private void Reset()
+        {
+            RepositionCharacter();
         }
 
         private void RepositionCharacter()

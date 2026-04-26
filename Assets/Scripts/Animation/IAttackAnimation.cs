@@ -7,5 +7,6 @@ namespace EdwinGameDev.Animation
         void SetAttacking(bool isAttacking);
         void SetOnAttackHit(Action callback);
         void OnAttackHit();
+        void SetAttackSpeed(float speed);
     }
 }

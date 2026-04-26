@@ -9,10 +9,11 @@ namespace EdwinGameDev.Character
         private readonly IMoveable _moveable;
         private readonly IMovementAnimation _animation;
 
-        public MovementModule(IMoveable moveable, IMovementAnimation animation)
+        public MovementModule(IMoveable moveable, IMovementAnimation animation, float movementSpeed)
         {
             _moveable = moveable;
             _animation = animation;
+            _animation.SetMoveSpeed(movementSpeed);
         }
 
         public void Move(Vector3 direction)

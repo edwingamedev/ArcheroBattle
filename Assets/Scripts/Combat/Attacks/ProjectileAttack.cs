@@ -8,10 +8,11 @@ namespace EdwinGameDev.Combat.Attacks
     {
         private readonly IProjectileSpawner _spawner;
         private readonly ITarget _owner;
-        public float AttackSpeed => 1;
+        public float AttackSpeed { get; }
 
-        public ProjectileAttack(IProjectileSpawner spawner, ITarget owner)
+        public ProjectileAttack(IProjectileSpawner spawner, ITarget owner, float attackSpeed)
         {
+            AttackSpeed = attackSpeed;
             _spawner = spawner;
             _owner = owner;
         }

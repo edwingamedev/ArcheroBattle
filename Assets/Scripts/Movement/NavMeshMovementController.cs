@@ -6,7 +6,7 @@ namespace EdwinGameDev.Movement
     [RequireComponent(typeof(NavMeshAgent))]
     public class NavMeshMovementController : MonoBehaviour, IMoveable
     {
-        [SerializeField] private float moveSpeed = 3.5f;
+        private float _moveSpeed = 3.5f;
 
         private NavMeshAgent _agent;
         private Vector3 _direction;
@@ -14,7 +14,12 @@ namespace EdwinGameDev.Movement
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _agent.speed = moveSpeed;
+        }
+
+        public void Setup(float movementSpeed)
+        {
+            _moveSpeed = movementSpeed;
+            _agent.speed = _moveSpeed;
             _agent.updateRotation = true;
         }
 

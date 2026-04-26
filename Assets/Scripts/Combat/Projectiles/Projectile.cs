@@ -28,10 +28,12 @@ namespace EdwinGameDev.Combat.Projectiles
         {
             if (other.TryGetComponent(out ITarget target))
             {
-                if (target != _owner)
+                if (target == _owner)
                 {
-                    target.TakeDamage(damage);
+                    return;
                 }
+
+                target.TakeDamage(damage);
             }
 
             Destroy(gameObject);
